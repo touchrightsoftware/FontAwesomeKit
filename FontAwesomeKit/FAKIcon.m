@@ -37,7 +37,13 @@
 + (instancetype)iconWithCode:(NSString *)code size:(CGFloat)size
 {
     FAKIcon *icon = [[self alloc] init];
-    icon.mutableAttributedString = [[NSMutableAttributedString alloc] initWithString:code attributes:@{NSFontAttributeName: [self iconFontWithSize:size]}];
+
+    UIFont *font = [self iconFontWithSize:size];
+    if( font == nil ){
+        return nil;
+    }
+    
+    icon.mutableAttributedString = [[NSMutableAttributedString alloc] initWithString:code attributes:@{NSFontAttributeName: font}];
     return icon;
 }
 
