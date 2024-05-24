@@ -12,12 +12,8 @@
 + (void)registerIconFontWithURL:(NSURL *)url
 {
     NSAssert([[NSFileManager defaultManager] fileExistsAtPath:[url path]], @"Font file doesn't exist");
-    CGDataProviderRef fontDataProvider = CGDataProviderCreateWithURL((__bridge CFURLRef)url);
-    CGFontRef newFont = CGFontCreateWithDataProvider(fontDataProvider);
-    CGDataProviderRelease(fontDataProvider);
     CFErrorRef error = NULL;
-    CTFontManagerRegisterGraphicsFont(newFont, &error);
-    CGFontRelease(newFont);
+    CTFontManagerRegisterFontsForURL((__bridge CFURLRef)url, kCTFontManagerScopeProcess, &error);
     
     if (error) {
         CFRelease(error);
